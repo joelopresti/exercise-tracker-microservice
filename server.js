@@ -1,39 +1,32 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import { addUser, getUsers, logExercise } from './controller';
 
 const app = express();
 const PORT = 3000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/exerciseTracker');
+mongoose.connect('mongodb://localhost/exerciseTracker', { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", express.static("./public"));
 
-
 // 1. I can create a user by posting form data username to /api/exercise/new-user 
 // and returned will be an object with username and _id.
-app.post('/api/exercise/new-user', (req, res) => {
-  console.log('add new user');
-});
+app.post('/api/exercise/new-user', addUser);
 
 // 2. I can get an array of all users by getting api/exercise/users 
 // with the same info as when creating a user.
-app.get('/api/exercise/users', (req, res) => {
-  console.log('get all users');
-});
-
+app.get('/api/exercise/users', getUsers);
 /* 
 3. I can add an exercise to any user by posting form data userId(_id), 
 description, duration, and optionally date to /api/exercise/add. 
 If no date supplied it will use current date. Returned will 
 the the user object with also with the exercise fields added.
 */
-app.post('/api/exercise/add', (req, res) => {
-  console.log('add new exercise');
-});
+app.post('/api/exercise/add', logExercise);
 
 /*
 4. I can retrieve a full exercise log of any user by getting /api/exercise/log 

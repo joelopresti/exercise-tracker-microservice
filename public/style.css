@@ -1,0 +1,17 @@
+body {
+  background-color: seagreen;
+  color: white;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form {
+  border: 1px solid white;
+  width: 350px;
+  padding: 10px;
+  margin: auto;
+}
+
+form > input {
+  margin: 5px;
+}

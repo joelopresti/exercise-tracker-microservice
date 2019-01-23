@@ -9,7 +9,22 @@
 </head>
 <body>
   <h1>Exercise Tracker</h1>
-  <form action="addUser" method="post"></form>
-  <form action="logExercise" method="post"></form>
+  <form action="/api/exercise/new-user" method="post">
+    <label for="username">New User: </label>
+    <input type="text" name="username" id="username">
+    <button type="submit" value="Submit">Submit</button>
+  </form>
+  <br/>
+  <form action="/api/exercise/add" method="post">
+    <label for="id">User ID:</label>
+    <input type="text" name="id" id="id"><br/>
+    <label for="description">Description:</label>
+    <input type="text" name="description" id="description"><br/>
+    <label for="duration">Duration:</label>
+    <input type="text" name="duration" id="duration"><br/>
+    <label for="date">Date:</label>
+    <input type="text" name="date" id="date"><br/>
+    <button type="submit" value="Submit">Submit</button>
+  </form>
 </body>
 </html>
