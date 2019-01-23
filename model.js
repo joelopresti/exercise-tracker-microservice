@@ -9,7 +9,7 @@ const exerciseSchema = new Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
 export const userSchema = new Schema({
   _id: {
@@ -25,7 +25,6 @@ export const userSchema = new Schema({
     default: 0
   },
   log: [exerciseSchema],
-  
 });
 
 userSchema.pre('save', function (next) {

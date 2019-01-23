@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { addUser, getUsers, logExercise } from './controller';
+import { addUser, getAllUsers, logExercise, getUserLog } from './controller';
 
 const app = express();
 const PORT = 3000;
@@ -19,7 +19,7 @@ app.post('/api/exercise/new-user', addUser);
 
 // 2. I can get an array of all users by getting api/exercise/users 
 // with the same info as when creating a user.
-app.get('/api/exercise/users', getUsers);
+app.get('/api/exercise/users', getAllUsers);
 /* 
 3. I can add an exercise to any user by posting form data userId(_id), 
 description, duration, and optionally date to /api/exercise/add. 
@@ -38,9 +38,7 @@ parameters of from & to or limit. (Date format yyyy-mm-dd, limit = int)
 */
 
 
-app.get('/api/exercise/log', (req, res) => {
-  console.log('get all exercises of a particular user');
-});
+app.get('/api/exercise/log/:userid', getUserLog);
 
 app.listen(PORT, () => {
   console.log(`Exercise Tracker app is running on port ${PORT}`);
