@@ -1,0 +1,35 @@
+{
+  "name": "exercise-tracker-microservice",
+  "version": "1.0.0",
+  "description": "Exercise Microservice using Express and Mongo",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./server.js --exec babel-node -e js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fendermaniac/exercise-tracker-microservice.git"
+  },
+  "author": "Joe LoPresti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fendermaniac/exercise-tracker-microservice/issues"
+  },
+  "homepage": "https://github.com/fendermaniac/exercise-tracker-microservice#readme",
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.6",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.9"
+  }
+}
