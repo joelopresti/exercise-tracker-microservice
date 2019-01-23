@@ -2,6 +2,15 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import shortid from 'shortid';
 
+const exerciseSchema = new Schema({
+  description: String,
+  duration: Number,
+  date: {
+    type: Date,
+    default: Date.now
+  }
+})
+
 export const userSchema = new Schema({
   _id: {
     type: String,
@@ -15,15 +24,7 @@ export const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  log: [
-    {
-    description: String,
-    duration: Number,
-    date: {
-      type: Date,
-      default: Date.now
-    }
-  }],
+  log: [exerciseSchema],
   
 });
 
