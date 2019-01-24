@@ -1,39 +1,40 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 import shortid from 'shortid';
+
+const { Schema } = mongoose;
 
 export const exerciseSchema = new Schema({
   description: String,
   duration: Number,
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 export const userSchema = new Schema({
   _id: {
     type: String,
-    default: shortid.generate
+    default: shortid.generate,
   },
   username: {
     type: String,
-    required: true
+    required: true,
   },
   count: {
     type: Number,
-    default: 0
+    default: 0,
   },
   log: [exerciseSchema],
 });
 
-userSchema.pre('save', function (next) {
-  var self = this;
-  mongoose.models["User"].findOne({username: self.username}, (err, user) => {
-     if (!user) {
-         next();
-     } else {
-         next(new Error("Username already exists!"));
-     }
- })
+userSchema.pre('save', function doesUserExist(next) {
+  const self = this;
+  mongoose.models.User.findOne({ username: self.username }, (err, user) => {
+    if (!user) {
+      next();
+    } else {
+      next(new Error('Username already exists!'));
+    }
+  });
 });
