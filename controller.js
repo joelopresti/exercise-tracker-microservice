@@ -27,12 +27,18 @@ export const logExercise = (req, res) => {
 export const getUserLog = (req, res) => {
   const { userid } = req.params;
   let { from, to, limit } = req.query;
-  let logs = [];
-//[&from][&to][&limit]
+  // [&from][&to][&limit]
+
+  const fromFilter = (currentDate, fromDate) => (fromDate
+    ? Date.parse(currentDate) > Date.parse(fromDate) : currentDate);
+
+  const toFilter = (currentDate, toDate) => (toDate
+    ? Date.parse(currentDate) < Date.parse(toDate) : currentDate);
+
   User.findById(userid).then((user) => {
-    logs.push(user.log);
+    const logs = user.log.filter(l => fromFilter(l.date, from));
+    res.send(logs);
   });
 
-  res.send(logs);
 // (err,docs)=> res.json(docs)).select({'count': 1,'log': 1,'_id':0});
 };
