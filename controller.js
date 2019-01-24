@@ -12,22 +12,21 @@ export const addUser = (req, res) => {
 };
 
 export const getAllUsers = (req, res) => {
-  User.find({}, (err, docs) => res.json(docs)).select({ '_id':0 });
+  User.find({}, (err, docs) => res.json(docs)).select({ _id: 0 });
 };
 
 export const logExercise = (req, res) => {
-  User.findOneAndUpdate({ '_id': req.body.id },
+  User.findOneAndUpdate({ _id: req.body.id },
     {
       $push: { log: req.body },
       $inc: { count: 1 },
-    })
-    .then(() => res.json(req.body));
+    }, (err, docs) => (
+      docs ? res.json(req.body) : res.send('User does not exist.')));
 };
 
 export const getUserLog = (req, res) => {
   const { userid } = req.params;
-  let { from, to, limit } = req.query;
-  // [&from][&to][&limit]
+  const { from, to, limit } = req.query;
 
   const fromFilter = (currentDate, fromDate) => (fromDate
     ? Date.parse(currentDate) > Date.parse(fromDate) : currentDate);
@@ -35,14 +34,16 @@ export const getUserLog = (req, res) => {
   const toFilter = (currentDate, toDate) => (toDate
     ? Date.parse(currentDate) < Date.parse(toDate) : currentDate);
 
-  // const limitFilter = logs => (logs ? logs.slice(0, limit) : logs);
+  // const limitFilter = logs => (logs ? {logs.length =} : logs);
   User.findById(userid).then((user) => {
     const logs = user.log
       .filter(l => fromFilter(l.date, from))
       .filter(l => toFilter(l.date, to));
-    // logs.filter(limitFilter);
-    res.send(logs);
+    if (limit && limit < logs.length) {
+      logs.length = limit;
+      res.send(logs);
+    } else {
+      res.send(logs);
+    }
   });
-
-// (err,docs)=> res.json(docs)).select({'count': 1,'log': 1,'_id':0});
 };
