@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import shortid from 'shortid';
 
-const exerciseSchema = new Schema({
+export const exerciseSchema = new Schema({
   description: String,
   duration: Number,
   date: {
