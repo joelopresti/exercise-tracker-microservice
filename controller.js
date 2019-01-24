@@ -35,8 +35,12 @@ export const getUserLog = (req, res) => {
   const toFilter = (currentDate, toDate) => (toDate
     ? Date.parse(currentDate) < Date.parse(toDate) : currentDate);
 
+  // const limitFilter = logs => (logs ? logs.slice(0, limit) : logs);
   User.findById(userid).then((user) => {
-    const logs = user.log.filter(l => fromFilter(l.date, from));
+    const logs = user.log
+      .filter(l => fromFilter(l.date, from))
+      .filter(l => toFilter(l.date, to));
+    // logs.filter(limitFilter);
     res.send(logs);
   });
 
