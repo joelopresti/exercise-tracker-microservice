@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
-import { userSchema, exerciseSchema } from './model';
+import { userSchema } from './model';
 
 const User = mongoose.model('User', userSchema);
-const Exercise = mongoose.model('Exercise', exerciseSchema);
 
 export const addUser = (req, res) => {
   const newUser = new User(req.body);
   newUser
     .save()
     .then(() => res.json(newUser))
-    .catch(err => res.send('User exists'));
+    .catch(() => res.send('User exists'));
 };
 
 export const getAllUsers = (req, res) => {
@@ -28,11 +27,12 @@ export const logExercise = (req, res) => {
 export const getUserLog = (req, res) => {
   const { userid } = req.params;
   let { from, to, limit } = req.query;
-
-  from = moment(from, 'YYYY-MM-DD').isValid() ? moment(from, 'YYYY-MM-DD') : 0;
-  to = moment(to, 'YYYY-MM-DD').isValid() ? moment(to, 'YYYY-MM-DD') : moment().add(999999999999);
-  
+  let logs = [];
 //[&from][&to][&limit]
-  User.findById(userid).then 
+  User.findById(userid).then((user) => {
+    logs.push(user.log);
+  });
+
+  res.send(logs);
 // (err,docs)=> res.json(docs)).select({'count': 1,'log': 1,'_id':0});
 };
