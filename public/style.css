@@ -6,12 +6,38 @@ body {
 }
 
 form {
+  text-align: right;
   border: 1px solid white;
-  width: 350px;
+  width: 300px;
   padding: 10px;
   margin: auto;
 }
 
+input {
+  border: none;
+  padding: .5em
+}
+
+button {
+  display: inline-block;
+  border: none;
+  border-radius: .25em;
+  text-decoration: none;
+  padding: .5em 2em;
+  margin-right: .5em;
+  background: #862e8b;
+  color: white;
+  transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+}
+
+button:hover,
+button:focus {
+  background: #4f1b52;
+}
+
+
 form > input {
   margin: 5px;
 }
+
